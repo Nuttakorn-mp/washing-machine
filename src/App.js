@@ -1,7 +1,8 @@
 import { Provider, connect } from 'react-redux'
 import { legacy_createStore as createStore } from 'redux';
 
-import { machineComponent } from './component/machineComponent'
+// import { machineComponent } from './component/machineComponent'
+import machineComponent from './component/machineComponent'
 import {rootReducers} from './reducers/rootReducers'
 
 import {machine1_mapStateToProps, machine1_mapDispatchToProps} from './mapProps/machine1'
