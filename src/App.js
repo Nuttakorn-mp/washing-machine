@@ -1,7 +1,6 @@
 import { Provider, connect } from 'react-redux'
 import { legacy_createStore as createStore } from 'redux';
 
-// import { machineComponent } from './component/machineComponent'
 import machineComponent from './component/machineComponent'
 import exampleComponent from './component/exampleComponent'
 import { rootReducers } from './reducers/rootReducers'
@@ -45,9 +44,9 @@ function App() {
     <Provider store={store}>
       <GridHead title={'washing mashine'} />
       <GridBody>
-          <Machine1 id={'Machine1'} />
-          <Machine2 id={'Machine2'} />
-          <Machine3 id={'Machine3'} />
+          <Machine1 />
+          <Machine2 />
+          <Machine3 />
           <MocMachine />
           <MocMachine />
           <MocMachine />

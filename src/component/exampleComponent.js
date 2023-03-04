@@ -18,7 +18,7 @@ function changeColor(e){
 
 function MachineComponent() {
     return (
-        <div className='machine'>
+        <div className='machine' style={{background: '#cafee9'}}>
             <br />
             <img className='Machine-Logo' src={machineLogo} alt="logo" />
             <h1>Mock-up</h1>
@@ -34,7 +34,6 @@ function MachineComponent() {
                 </select>
             </label>
             &nbsp;
-            {/* onClick={()=>document.getElementById('m').style.background = '#ff3243b5'} */}
             <button onClick={(e)=>
                 e.target.parentElement.style.background=changeColor(e)
                 }>
@@ -43,5 +42,22 @@ function MachineComponent() {
         </div>
     )
 }
+
+// useEffect(() => {
+//     if (timer >= 0) {
+//         const interval = setInterval(() => {
+//             setTimer(time => time - 1)
+//             setSeconds(getRemainingSeconds(timer))
+//             setMinutes(getRemainingMinutes(timer))
+//             setHours(getRemainingHours(timer))
+//         }, 1000)
+//         return () => {
+//             clearInterval(interval)
+//         }
+//     }
+//     else { finishMachine() }
+// }, [
+//     timer
+// ])
 
 export default MachineComponent

@@ -4,25 +4,24 @@ import { getRemainingHours, getRemainingMinutes, getRemainingSeconds } from '../
 import machineLogo from '../washingMachine.svg'
 import '../App.css';
 
-function updateColor(machineActive, id) {
+function updateColor(machineActive, set) {
     // red   => #ff3243b5
     // green => #cafee9
-    if (machineActive) {
-        //active => true => color red
-        document.getElementById(id).style.background = '#ff3243b5'
-    }
-    else {
-        //active => false => color green
-        document.getElementById(id).style.background = '#cafee9'
-    }
+    if (machineActive) {set('#ff3243b5')}
+    else {set('#cafee9')}
 }
 
-function MachineComponent({ useMachine, finishMachine, machine, id }) {
-    const [timer, setTimer] = useState(0)
+function MachineComponent({ 
+    useMachine, 
+    finishMachine, 
+    decrementMachine, 
+    setTimeMachine, 
+    machine, time}) {
     const [seconds, setSeconds] = useState('00')
     const [minutes, setMinutes] = useState('00')
     const [hours, setHours] = useState('00')
     const [selected, setSelected] = useState(10);
+    const [bgColor, setBgColor] = useState('#cafee9')
 
     const ClickSelectTime = ({ children }) => {
         return (
@@ -67,37 +66,36 @@ function MachineComponent({ useMachine, finishMachine, machine, id }) {
 
     const Machine = ({ children }) => {
         return (
-            <div className='machine' id={id}>
+            <div className='machine' style={{backgroundColor:bgColor}}>
                 {children}
             </div>
         )
     }
 
     useEffect(() => {
-        updateColor(machine, id)
-        if (timer >= 0) {
+        updateColor(machine, setBgColor)
+        if (time >= 0) {
             const interval = setInterval(() => {
-                setTimer(time => time - 1)
-                setSeconds(getRemainingSeconds(timer))
-                setMinutes(getRemainingMinutes(timer))
-                setHours(getRemainingHours(timer))
+                decrementMachine()
+                setSeconds(getRemainingSeconds(time))
+                setMinutes(getRemainingMinutes(time))
+                setHours(getRemainingHours(time))
             }, 1000)
             return () => {
                 clearInterval(interval)
             }
         }
         else { finishMachine() }
-    }, [timer, finishMachine, machine, id])
+    }, [finishMachine, decrementMachine, time, machine])
 
     function OnClickReset() {
-        setTimer(selected)
         useMachine()
-
+        setTimeMachine(selected)
     }
+
     function handleChange(e) {
         setSelected(e.target.value)
     }
-
 
     return (
         <Machine>

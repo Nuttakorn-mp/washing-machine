@@ -1,4 +1,4 @@
-.App {
+/* .App {
   text-align: center;
 }
 
@@ -35,7 +35,7 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */
 
 .Machine-Logo {
   height: 150px;
@@ -61,7 +61,7 @@
   padding: 10px;
   border-style: solid;
   text-align: center;
-  background-color: #cafee9;
+  /* background-color: #cafee9; */
 }
 
 .grid{
