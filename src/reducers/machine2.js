@@ -7,7 +7,6 @@ export default function machine2(state = false, action) {
       console.log('finish2')
       return false;
     default:
-      // console.log('not working2')
       return state;
   }
 }

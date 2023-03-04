@@ -4,16 +4,77 @@ import { getRemainingHours, getRemainingMinutes, getRemainingSeconds } from '../
 import machineLogo from '../washingMachine.svg'
 import '../App.css';
 
-function MachineComponent({ useMachine, finishMachine, machine, number }) {
+function updateColor(machineActive, id) {
+    // red   => #ff3243b5
+    // green => #cafee9
+    if (machineActive) {
+        //active => true => color red
+        document.getElementById(id).style.background = '#ff3243b5'
+    }
+    else {
+        //active => false => color green
+        document.getElementById(id).style.background = '#cafee9'
+    }
+}
+
+function MachineComponent({ useMachine, finishMachine, machine, id }) {
     const [timer, setTimer] = useState(0)
     const [seconds, setSeconds] = useState('00')
     const [minutes, setMinutes] = useState('00')
     const [hours, setHours] = useState('00')
-
     const [selected, setSelected] = useState(10);
 
+    const ClickSelectTime = ({ children }) => {
+        return (
+            <label>
+                Time &nbsp;
+                <select
+                    name="selectedTime"
+                    onChange={handleChange}
+                    disabled={machine}
+                    defaultValue={"10 seconds"}>
+                    {children}
+                </select>
+                &nbsp;
+            </label>
+        )
+    }
+
+    const UseMachineButton = () => {
+        return (
+            <button
+                onClick={OnClickReset}
+                disabled={machine}>
+                use
+            </button>
+        )
+    }
+
+    const MachineLogo = () => {
+        return (
+            <>
+                <br />
+                <img className='Machine-Logo' src={machineLogo} alt="logo" />
+            </>
+        )
+    }
+
+    const ShowMachineTime = () => {
+        return (
+            <h1>{hours} : {minutes} : {seconds}</h1>
+        )
+    }
+
+    const Machine = ({ children }) => {
+        return (
+            <div className='machine' id={id}>
+                {children}
+            </div>
+        )
+    }
+
     useEffect(() => {
-        console.log()
+        updateColor(machine, id)
         if (timer >= 0) {
             const interval = setInterval(() => {
                 setTimer(time => time - 1)
@@ -26,11 +87,12 @@ function MachineComponent({ useMachine, finishMachine, machine, number }) {
             }
         }
         else { finishMachine() }
-    }, [timer, finishMachine])
+    }, [timer, finishMachine, machine, id])
 
     function OnClickReset() {
         setTimer(selected)
         useMachine()
+
     }
     function handleChange(e) {
         setSelected(e.target.value)
@@ -38,33 +100,16 @@ function MachineComponent({ useMachine, finishMachine, machine, number }) {
 
 
     return (
-        <div>
-            <br></br>
-            <img className='Machine-Logo' src={machineLogo} alt="logo" />
-            <h1>{hours} : {minutes} : {seconds}</h1>
-
-            <h2>machine{number} </h2>
-            <p>machine active status : {String(machine)}</p>
-            <div>u select {selected}</div>
-
-            <label>
-                Select Time
-                <select
-                    name="selectedTime"
-                    onChange={handleChange}
-                    defaultValue={"10 seconds"}>
-                    <option value={10}>10 seconds</option>
-                    <option value={60}>1 minutes</option>
-                    <option value={3600}>1 hours</option>
-                </select>
-            </label>
-
-            <button
-                onClick={OnClickReset}
-                disabled={machine ? true : false}>
-                use machine
-            </button>
-        </div>
+        <Machine>
+            <MachineLogo />
+            <ShowMachineTime />
+            <ClickSelectTime>
+                <option value={10}>10 sec</option>
+                <option value={60}>1 min</option>
+                <option value={3600}>1 hr</option>
+            </ClickSelectTime>
+            <UseMachineButton />
+        </Machine>
     )
 }
 

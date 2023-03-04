@@ -3,7 +3,6 @@ export function getRemainingSeconds(timer) {
     if (sec > 9) { return sec }
     else { return '0' + sec }
 }
-
 export function getRemainingMinutes(timer) {
     let min = Math.floor((timer / 60) % 60)
     if (min > 9) { return min }
